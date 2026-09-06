@@ -6,13 +6,13 @@ A portable C document API for parsing, retaining, measuring, drawing, and serial
 
 ```sh
 git clone https://github.com/gildrb/archetypon
-git clone https://github.com/gildrb/korsvg
-cd korsvg
+git clone https://github.com/gildrb/kor
+cd kor
 make
 make test
 ```
 
-The default build expects both repositories under the same parent directory. Set `ARCHETYPON_DIR=/path/to/archetypon` when they are elsewhere. KorSVG compiles the Archetypon sources into a project-local dependency archive and does not modify the Archetypon checkout.
+The default build expects both repositories under the same parent directory. Set `ARCHETYPON_DIR=/path/to/archetypon` when they are elsewhere. Kor compiles the Archetypon sources into a project-local dependency archive and does not modify the Archetypon checkout.
 
 The build produces `libkorsvg.a`. It contains the document adapter only; consumers link it with `libarchetypon.a` and the system math runtime:
 
@@ -40,6 +40,9 @@ instead. Native POSIX atomic URL writes are unchanged.
 
 ## Document surface
 
+The project is Kor. The public header `korsvg.h`, static library `libkorsvg.a`,
+pkg-config file `korsvg.pc`, and `KorSVG*` API symbols keep their existing names.
+
 | Function | Contract |
 | --- | --- |
 | `KorSVGDocumentCreateFromData` | Copies immutable SVG bytes, verifies canvas geometry, and parses the complete supported document |
@@ -51,7 +54,7 @@ instead. Native POSIX atomic URL writes are unchanged.
 | `KorSVGDocumentWriteToURL` | Atomically replaces a file with the original source bytes after a complete temporary-file write |
 | `KorSVGDocumentGetTypeID` | Returns the stable KorSVG document type identifier |
 
-`KorSVGDataRef`, `KorSVGURLRef`, `KorSVGContextRef`, `KorSVGDocumentRef`, `KorSVGOptionsRef`, `KorSVGTypeID`, and `KorSVGSize` are KorSVG-owned types. This is an independent portable API, not a Core Foundation or Core Graphics compatibility layer. No platform headers or dynamic symbol lookup are required. Options are reserved for future KorSVG policy and currently have no effect. The header can be included from C or C++.
+`KorSVGDataRef`, `KorSVGURLRef`, `KorSVGContextRef`, `KorSVGDocumentRef`, `KorSVGOptionsRef`, `KorSVGTypeID`, and `KorSVGSize` are KorSVG-owned types. This is an independent portable API, not a Core Foundation or Core Graphics compatibility layer. No platform headers or dynamic symbol lookup are required. Options are reserved for future Kor policy and currently have no effect. The header can be included from C or C++.
 
 ## Drawing
 
@@ -110,7 +113,7 @@ URL loading validates and reads the descriptor returned by one `open` call, so p
 
 Document creation performs a one-pixel probe render. This forces unsupported rendering elements and properties to fail at creation rather than survive as deferred draw-time failures. The retained source remains byte-for-byte stable for serialization.
 
-Archetypon provides geometry, paths, transforms, solid and linear-gradient paints, inherited presentation styles, embedded simple CSS selectors, group and element opacity, fill and clip rules, dashed strokes with round/miter/bevel joins, clipping paths, and luminance or alpha masks. Retained group commands isolate container opacity, clipping, and masking before KorSVG caches the completed size-specific plan.
+Archetypon provides geometry, paths, transforms, solid and linear-gradient paints, inherited presentation styles, embedded simple CSS selectors, group and element opacity, fill and clip rules, dashed strokes with round/miter/bevel joins, clipping paths, and luminance or alpha masks. Retained group commands isolate container opacity, clipping, and masking before Kor caches the completed size-specific plan.
 
 Unsupported features fail during document creation rather than rendering partially. These currently include text, images, external resources, radial gradients, filters, patterns, nested viewports, complex CSS selectors, nested clip/mask content, and non-pad gradient spread modes.
 
@@ -142,7 +145,7 @@ The harness passes arbitrary bytes through document creation and, for accepted d
 ## Files
 
 ```text
-korsvg/
+kor/
   korsvg.h          public opaque document, data, URL, and RGBA context API
   main.c            ownership, I/O, document calls, rendering, compositing
   tests/test.c      API, lifetime, pixel, round-trip, and rejection proof

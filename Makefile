@@ -82,7 +82,7 @@ build/korsvg.pc: Makefile
 		'libdir=$${exec_prefix}/lib' \
 		'includedir=$${prefix}/include' \
 		'' \
-		'Name: KorSVG' \
+		'Name: Kor' \
 		'Description: Portable C SVG document and RGBA rendering API' \
 		'Version: 1.0.0' \
 		'Libs: -L$${libdir} -lkorsvg -larchetypon -pthread -lm' \
