@@ -1,4 +1,4 @@
-# KorSVG
+# Kor
 
 A portable C document API for parsing, retaining, measuring, drawing, and serializing SVG data through the reusable Archetypon library.
 
