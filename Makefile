@@ -55,6 +55,13 @@ build/regression: tests/regression.c korsvg.h libkorsvg.a $(ARCHETYPON_LIBRARY)
 	$(CC) $(CPPFLAGS) $(CFLAGS) $(THREAD_FLAGS) tests/regression.c libkorsvg.a \
 		$(ARCHETYPON_LIBRARY) $(LDFLAGS) $(THREAD_FLAGS) $(LDLIBS) -o "$@"
 
+# Native execution of the fail-closed WASI branch, without a WASM toolchain.
+build/test_wasi: tests/test_wasi.c main.c korsvg.h $(ARCHETYPON_LIBRARY)
+	mkdir -p build
+	$(CC) $(CPPFLAGS) -D__wasi__ -I"$(ARCHETYPON_DIR)" $(CFLAGS) $(THREAD_FLAGS) \
+		tests/test_wasi.c main.c $(ARCHETYPON_LIBRARY) $(LDFLAGS) \
+		$(THREAD_FLAGS) $(LDLIBS) -o "$@"
+
 fixtures:
 	./tests/generate_fixtures.sh
 
@@ -81,7 +88,7 @@ build/korsvg.pc: Makefile
 		'Libs: -L$${libdir} -lkorsvg -larchetypon -pthread -lm' \
 		'Cflags: -I$${includedir}' > "$@"
 
-test: build/test build/test_cpp build/regression
+test: build/test build/test_cpp build/regression build/test_wasi
 	./tests/test.sh
 
 install: all build/korsvg.pc

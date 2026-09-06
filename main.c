@@ -799,6 +799,14 @@ s32 KorSVGDocumentWriteToData(KorSVGDocumentRef document, KorSVGDataRef data,
 s32 KorSVGDocumentWriteToURL(KorSVGDocumentRef document, KorSVGURLRef url,
 			    KorSVGOptionsRef options)
 {
+#if defined(__wasi__)
+	(void)document;
+	(void)url;
+	(void)options;
+	clear_error();
+	return set_error("atomic SVG URL writes are unavailable on WASI; "
+			 "use KorSVGDocumentWriteToData");
+#else
 	static const char suffix[] = ".korsvg.XXXXXX";
 	struct stat destination_status;
 	const u8 *source;
@@ -878,4 +886,5 @@ s32 KorSVGDocumentWriteToURL(KorSVGDocumentRef document, KorSVGURLRef url,
 	}
 	free(temporary);
 	return 1;
+#endif
 }

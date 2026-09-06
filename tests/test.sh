@@ -7,6 +7,7 @@ trap 'rm -rf "$temporary"' 0 HUP INT TERM
 
 "$root/build/test" "$temporary"
 "$root/build/test_cpp"
+"$root/build/test_wasi" "$temporary"
 "$root/build/regression" "$root/tests/fixtures"
 
 defined_symbols=$(nm -g "$root/libkorsvg.a" |

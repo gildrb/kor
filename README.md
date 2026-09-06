@@ -29,6 +29,15 @@ cc app.c $(pkg-config --cflags --libs korsvg)
 
 `DESTDIR` is supported for staged packaging. The pkg-config link flags propagate the Archetypon, pthread, and math dependencies.
 
+## WebAssembly
+
+The data, retained-document, and RGBA context APIs can be compiled for a
+single-threaded WebAssembly host. Use byte data for browser files and downloads;
+KorSVG URLs are filesystem paths, not HTTP URLs. WASI builds do not provide
+atomic URL writing: `KorSVGDocumentWriteToURL` returns zero with a diagnostic
+without opening or changing the destination. Use `KorSVGDocumentWriteToData`
+instead. Native POSIX atomic URL writes are unchanged.
+
 ## Document surface
 
 | Function | Contract |
